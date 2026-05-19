@@ -6,22 +6,14 @@ void main(){
   runApp(const InventarioApp());
 }
 
-class InventarioApp extends StatelessWidget{
-  const InventarioApp ({super.key});
+class InventarioApp extends StatelessWidget {
+  const InventarioApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Inventario',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('inventario')),
-        body: ListView(
-          children: inventario.map((p) => ListTile(
-            title: Text(p.nombre),
-            subtitle: Text("Cantidad: ${p.cantidad} - Precio: \$${p.precio}"),
-          )).toList(),
-        ),
-      ),
+      home: InventarioScreen(), 
     );
   }
 }

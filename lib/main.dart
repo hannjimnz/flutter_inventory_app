@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventario_app/models/producto.dart';
-import 'screens/inventario_screen.dart';
+import 'screens/login_screen.dart';
 
 void main(){
   runApp(const InventarioApp());
@@ -13,7 +12,7 @@ class InventarioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Inventario',
-      home: InventarioScreen(), 
+      home: LoginScreen(), 
     );
   }
 }

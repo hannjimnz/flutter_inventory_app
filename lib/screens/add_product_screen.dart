@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/producto.dart';
 
 class AddProductScreen extends StatefulWidget {
-  final Function (Producto) onAdd;
+  final Producto? productoExistente;
+  final Function (Producto)? onAdd;
 
-  const AddProductScreen({super.key, required this.onAdd});
+  const AddProductScreen({super.key, this.productoExistente, this.onAdd});
 
   @override
   State<AddProductScreen> createState() => _AddProductScreen();
@@ -13,14 +14,28 @@ class AddProductScreen extends StatefulWidget {
 
 class _AddProductScreen extends State<AddProductScreen>{
   final _formkey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _quantityController = TextEditingController();
-  final _priceController = TextEditingController();
+  late  TextEditingController _nameController;
+  late  TextEditingController _quantityController ;
+  late   TextEditingController _priceController;
+
+  @override
+  void initState(){
+    super.initState();
+    _nameController = TextEditingController(text: widget.productoExistente?.nombre ?? "");
+    _quantityController = TextEditingController(text: widget.productoExistente != null ? widget.productoExistente!.cantidad.toString() : "",
+);
+
+    _priceController = TextEditingController( text: widget.productoExistente != null ? widget.productoExistente!.precio.toString() : "",
+);
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Agregar producto")),
+      appBar: AppBar ( 
+        title: Text(widget.productoExistente == null? "Agregar producto" : "Editar produto"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -51,14 +66,16 @@ class _AddProductScreen extends State<AddProductScreen>{
               ElevatedButton(
                 onPressed: (){
                   if(_formkey.currentState!.validate()){
-                    final newProduct = Producto(
+                    final producto = Producto(
                       nombre: _nameController.text,
                       cantidad: int.parse(_quantityController.text),
                       precio: double.parse(_priceController.text),
 
                     );
-                    widget.onAdd(newProduct);
-                    Navigator.pop(context);
+                    if (widget.onAdd != null){
+                      widget.onAdd!(producto); //solo si lo agregara
+                    }
+                    Navigator.pop(context, producto); //devuelve los productos a inventario_screen
                   }
                 },
                 child: const Text("Guardar"),

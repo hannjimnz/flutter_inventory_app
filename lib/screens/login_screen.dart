@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen>{
   final _passwordControler = TextEditingController();
 
   void _login() async{
-    print("Funciona");
+    
     final user = await DbHelper.loginUser(
       _emailController.text,
       _passwordControler.text,
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen>{
         MaterialPageRoute(builder: (context) => const InventarioScreen()),
 
       );
-      print("usuario: $user");
+      
     }else{
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Usuario o contraseña incorrectos")),
